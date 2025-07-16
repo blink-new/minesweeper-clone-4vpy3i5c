@@ -8,7 +8,7 @@ interface GameBoardProps {
 }
 
 export function GameBoard({ gameState, onRevealCell, onToggleFlag }: GameBoardProps) {
-  const { board, gameStatus, difficulty } = gameState;
+  const { board, gameStatus, difficulty, xrayActive } = gameState;
 
   const gridStyles = {
     display: 'grid',
@@ -34,6 +34,7 @@ export function GameBoard({ gameState, onRevealCell, onToggleFlag }: GameBoardPr
           onReveal={onRevealCell}
           onFlag={onToggleFlag}
           gameStatus={gameStatus}
+          xrayActive={xrayActive}
         />
       ))}
     </div>

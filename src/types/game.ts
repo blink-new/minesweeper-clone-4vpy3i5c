@@ -8,6 +8,17 @@ export interface Cell {
   neighborMines: number;
 }
 
+export interface PowerUp {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  uses: number;
+  maxUses: number;
+  cooldown: number;
+  lastUsed: number;
+}
+
 export interface GameState {
   board: Cell[][];
   gameStatus: 'playing' | 'won' | 'lost';
@@ -15,6 +26,11 @@ export interface GameState {
   flagCount: number;
   timeElapsed: number;
   difficulty: Difficulty;
+  powerUps: PowerUp[];
+  xrayActive: boolean;
+  xrayEndTime: number;
+  timeFrozen: boolean;
+  timeFreezeEndTime: number;
 }
 
 export interface Difficulty {

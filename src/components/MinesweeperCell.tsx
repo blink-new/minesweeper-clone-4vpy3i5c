@@ -6,6 +6,7 @@ interface MinesweeperCellProps {
   onReveal: (row: number, col: number) => void;
   onFlag: (row: number, col: number) => void;
   gameStatus: 'playing' | 'won' | 'lost';
+  xrayActive?: boolean;
 }
 
 const numberColors = {
@@ -19,7 +20,7 @@ const numberColors = {
   8: 'text-gray-600'
 };
 
-export function MinesweeperCell({ cell, onReveal, onFlag, gameStatus }: MinesweeperCellProps) {
+export function MinesweeperCell({ cell, onReveal, onFlag, gameStatus, xrayActive = false }: MinesweeperCellProps) {
   const handleClick = () => {
     if (gameStatus !== 'playing') return;
     onReveal(cell.row, cell.col);
@@ -34,6 +35,11 @@ export function MinesweeperCell({ cell, onReveal, onFlag, gameStatus }: Mineswee
   const getCellContent = () => {
     if (cell.isFlagged) {
       return <span className="text-red-500 font-bold">🚩</span>;
+    }
+    
+    // X-ray vision shows mines even when not revealed
+    if (xrayActive && cell.isMine && !cell.isRevealed) {
+      return <span className="text-red-400 font-bold opacity-70">💣</span>;
     }
     
     if (!cell.isRevealed) {
@@ -63,7 +69,8 @@ export function MinesweeperCell({ cell, onReveal, onFlag, gameStatus }: Mineswee
         baseStyles,
         'bg-gray-300 hover:bg-gray-200 active:bg-gray-400',
         'shadow-[inset_2px_2px_4px_rgba(255,255,255,0.8),inset_-2px_-2px_4px_rgba(0,0,0,0.2)]',
-        cell.isFlagged && 'bg-yellow-200 hover:bg-yellow-100'
+        cell.isFlagged && 'bg-yellow-200 hover:bg-yellow-100',
+        xrayActive && cell.isMine && 'bg-red-100 border-red-300'
       );
     }
 
